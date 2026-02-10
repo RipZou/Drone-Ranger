@@ -552,7 +552,7 @@ Transform:
   m_GameObject: {fileID: 239453360}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: 0, z: 13}
+  m_LocalPosition: {x: -10, y: 5, z: 13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -655,7 +655,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 196e21c4dda7b485289fc1dc917a6973, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -1049,13 +1049,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 239453365}
-  depthRT: {fileID: 8400000, guid: a30422294f64c4216818e99b9f17e41c, type: 2}
-  width: 640
-  height: 640
-  fx: 900
-  fy: 900
-  cx: 320
-  cy: 320
   worldOrigin: {fileID: 4485}
   originLatDeg: 37.7749
   originLonDeg: -122.4194
@@ -1064,6 +1057,7 @@ MonoBehaviour:
   frameId: static_cam_target
   fps: 5
   latencyMs: 30
+  maxRayDistance: 200
 --- !u!1 &616621095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,9 +2013,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1985238720}
-  - component: {fileID: 1985238719}
   - component: {fileID: 1985238722}
   - component: {fileID: 1985238721}
+  - component: {fileID: 1985238723}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Untagged
@@ -2029,18 +2023,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1985238719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985238718}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d21ff27b207a54dabb5cab44c1a0bb2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1985238720
 Transform:
   m_ObjectHideFlags: 0
@@ -2088,6 +2070,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24141724548174e39b0e962173a392f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1985238723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985238718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 716f1560013f7410d9b058adab46bcc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drone: {fileID: 0}
+  worldOrigin: {fileID: 0}
+  originLatDeg: 37.7749
+  originLonDeg: -122.4194
+  originAltM: 30
+  topic: /drone/gps
+  frameId: drone_gps
+  fps: 10
+  latencyMs: 40
 --- !u!1001 &2020670614
 PrefabInstance:
   m_ObjectHideFlags: 0
