@@ -23,7 +23,7 @@ public class OakLitePublisher : MonoBehaviour
 
     [Header("Intrinsics")]
     public int width = 1280, height = 720;
-    public double fx = 900, fy = 900, cx = 640, cy = 360;
+    public double fx = 184.75, fy = 184.75, cx = 320, cy = 320;
     public double[] D = new double[] { 0, 0, 0, 0, 0 };
 
     [Header("Timing")]

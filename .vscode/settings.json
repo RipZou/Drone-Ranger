@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Drone Testing.sln"
+    "dotnet.defaultSolution": "Drone-Ranger.sln"
 }
