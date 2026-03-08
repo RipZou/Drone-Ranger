@@ -30,32 +30,64 @@ class OdomBridge(Node):
 
         self.get_logger().info('✅ odom_bridge started: /fmu/out/vehicle_odometry -> /drone/odom')
 
+    # def odom_callback(self, msg):
+    # 	odom = Odometry()
+
+    # 	odom.header.frame_id = 'map'
+    # 	odom.child_frame_id = 'base_link'
+
+    # 	# PX4 -> ROS2 : cast to Python float
+    # 	odom.pose.pose.position = Point(
+    #     	x=float(msg.position[0]),
+    #     	y=float(msg.position[1]),
+    #     	z=float(msg.position[2])
+    # 	)
+
+    # 	# PX4 quaternion order is [w, x, y, z] -> ROS needs (x,y,z,w)
+    # 	odom.pose.pose.orientation = Quaternion(
+    #     	x=float(msg.q[1]),
+    #     	y=float(msg.q[2]),
+    #     	z=float(msg.q[3]),
+    #     	w=float(msg.q[0])
+    # 	)
+
+    # 	odom.twist.twist.linear.x = float(msg.velocity[0])
+    # 	odom.twist.twist.linear.y = float(msg.velocity[1])
+    # 	odom.twist.twist.linear.z = float(msg.velocity[2])
+
+    # 	self.pub.publish(odom)
     def odom_callback(self, msg):
-    	odom = Odometry()
+        odom = Odometry()
+        odom.header.frame_id = 'map'
+        odom.child_frame_id = 'base_link'
 
-    	odom.header.frame_id = 'map'
-    	odom.child_frame_id = 'base_link'
+        # PX4 NED -> ROS ENU
+        n = float(msg.position[0])
+        e = float(msg.position[1])
+        d = float(msg.position[2])
 
-    	# PX4 -> ROS2 : cast to Python float
-    	odom.pose.pose.position = Point(
-        	x=float(msg.position[0]),
-        	y=float(msg.position[1]),
-        	z=float(msg.position[2])
-    	)
+        odom.pose.pose.position.x = e
+        odom.pose.pose.position.y = n
+        odom.pose.pose.position.z = -d  # Up
 
-    	# PX4 quaternion order is [w, x, y, z] -> ROS needs (x,y,z,w)
-    	odom.pose.pose.orientation = Quaternion(
-        	x=float(msg.q[1]),
-        	y=float(msg.q[2]),
-        	z=float(msg.q[3]),
-        	w=float(msg.q[0])
-    	)
+        # quaternion order fix only (orientation mapping TODO)
+        odom.pose.pose.orientation = Quaternion(
+            x=float(msg.q[1]),
+            y=float(msg.q[2]),
+            z=float(msg.q[3]),
+            w=float(msg.q[0])
+        )
 
-    	odom.twist.twist.linear.x = float(msg.velocity[0])
-    	odom.twist.twist.linear.y = float(msg.velocity[1])
-    	odom.twist.twist.linear.z = float(msg.velocity[2])
+        vn = float(msg.velocity[0])
+        ve = float(msg.velocity[1])
+        vd = float(msg.velocity[2])
 
-    	self.pub.publish(odom)
+        odom.twist.twist.linear.x = ve
+        odom.twist.twist.linear.y = vn
+        odom.twist.twist.linear.z = -vd
+
+        self.pub.publish(odom)
+
 
 
 def main(args=None):

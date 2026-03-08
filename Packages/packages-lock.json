@@ -1,5 +1,17 @@
 {
   "dependencies": {
+    "com.cesium.unity": {
+      "version": "1.22.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.0",
+        "com.unity.test-framework": "1.1.31",
+        "com.unity.shadergraph": "12.1.6",
+        "com.unity.inputsystem": "1.4.2"
+      },
+      "url": "https://unity.pkg.cesium.com"
+    },
     "com.unity.collab-proxy": {
       "version": "2.9.3",
       "depth": 0,
@@ -60,12 +72,39 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.inputsystem": {
+      "version": "1.14.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.mathematics": {
+      "version": "1.2.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.performance.profile-analyzer": {
       "version": "1.2.3",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
+    },
+    "com.unity.render-pipelines.core": {
+      "version": "14.0.12",
+      "depth": 2,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0",
+        "com.unity.modules.physics": "1.0.0",
+        "com.unity.modules.terrain": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0"
+      }
     },
     "com.unity.robotics.ros-tcp-connector": {
       "version": "https://github.com/Unity-Technologies/ROS-TCP-Connector.git?path=com.unity.robotics.ros-tcp-connector#v0.7.0",
@@ -74,11 +113,12 @@
       "dependencies": {},
       "hash": "c27f00c6cf750d2d0564349b3039d19aa3925e7c"
     },
-    "com.unity.robotics.visualizations": {
-      "version": "file:/Users/zouxiaoman/ROS-TCP-Connector/com.unity.robotics.visualizations",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {}
+    "com.unity.searcher": {
+      "version": "4.9.2",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
     },
     "com.unity.settings-manager": {
       "version": "2.1.0",
@@ -86,6 +126,15 @@
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
+    },
+    "com.unity.shadergraph": {
+      "version": "14.0.12",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.render-pipelines.core": "14.0.12",
+        "com.unity.searcher": "4.9.2"
+      }
     },
     "com.unity.test-framework": {
       "version": "1.1.33",

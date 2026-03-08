@@ -4,7 +4,7 @@ using RosMessageTypes.Sensor;
 using RosMessageTypes.Std;
 using System;
 
-public class OakLitePublisher : MonoBehaviour
+public class OakLiteBinaryPublisher : MonoBehaviour
 {
     [Header("Cameras / RenderTextures")]
     public Camera colorCam;

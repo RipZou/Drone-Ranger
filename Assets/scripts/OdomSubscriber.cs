@@ -8,6 +8,7 @@ using RosMessageTypes.Nav;
 /// </summary>
 public class DronePoseSubscriber : MonoBehaviour
 {
+
     public enum PoseMode { PositionOnly, PositionPlusYaw, FullPose }
 
     [Header("ROS Settings")]
@@ -16,6 +17,9 @@ public class DronePoseSubscriber : MonoBehaviour
 
     [Tooltip("Check if incoming odometry is NED (Z down, PX4). Leave unchecked for ENU (Z up, PyBullet).")]
     public bool odomIsNED = false;
+
+    [Header("Control")]
+    public bool applyPoseFromROS = true;
 
     [Header("Target Object")]
     [Tooltip("The transform that will follow the drone pose (default: this object)")]
@@ -52,6 +56,7 @@ public class DronePoseSubscriber : MonoBehaviour
 
     void OnOdom(OdometryMsg msg)
     {
+        if (!applyPoseFromROS) return;
         var p = msg.pose.pose.position;
         var q = msg.pose.pose.orientation;
 
