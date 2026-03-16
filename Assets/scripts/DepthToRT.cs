@@ -56,6 +56,9 @@ public class DepthToRT_NoScreen : MonoBehaviour
     public int width = 640;
     public int height = 640;
 
+    [Header("Culling Mask (which layers write to depth)")]
+    public LayerMask renderLayers = ~0; // set in Inspector; e.g. exclude OccupancyDebug
+
     Camera cam;
     CommandBuffer cb;
 
@@ -68,7 +71,7 @@ public class DepthToRT_NoScreen : MonoBehaviour
         cam.enabled = true;
         cam.clearFlags = CameraClearFlags.SolidColor;
         cam.backgroundColor = Color.black;
-        cam.cullingMask = ~0;
+        cam.cullingMask = renderLayers;
         cam.nearClipPlane = 0.01f;
         cam.farClipPlane  = 1000f;
 

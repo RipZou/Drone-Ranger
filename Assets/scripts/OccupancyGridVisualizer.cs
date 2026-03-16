@@ -22,6 +22,10 @@ public class OccupancyGridVisualizer : MonoBehaviour
     [Tooltip("Log each received message (disable after debugging)")]
     public bool debugLogReceive = true;
 
+    [Header("Layer")]
+    [Tooltip("Unity layer name used for occupancy debug spheres (depth camera should exclude this layer)")]
+    public string occupancyLayerName = "OccupancyDebug";
+
     private ROSConnection ros;
     private Vector3[] cachedWorldPositions;
     private int cachedCount;
@@ -108,6 +112,10 @@ public class OccupancyGridVisualizer : MonoBehaviour
     {
         var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         go.name = "occ_pt";
+        // Put debug spheres on a dedicated layer so depth camera can ignore them.
+        int occLayer = LayerMask.NameToLayer(occupancyLayerName);
+        if (occLayer >= 0)
+            go.layer = occLayer;
         go.transform.SetParent(pointsRoot, false);
         go.transform.position = worldPos;
         go.transform.localScale = Vector3.one * pointScale;

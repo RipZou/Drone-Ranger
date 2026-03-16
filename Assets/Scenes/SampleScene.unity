@@ -295,7 +295,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 4caa58fd8fe1a4ddd91585f84937a466, type: 2}
   m_TargetDisplay: 0
@@ -637,6 +637,9 @@ MonoBehaviour:
   linearDepthMat: {fileID: 2100000, guid: 1a4e94f91c4f34780864abbef8b7198d, type: 2}
   width: 640
   height: 640
+  renderLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &239453363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -804,7 +807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3814185294606463374, guid: 3f7dd0e9bb47425f3b6515ab77926eb2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32.2
+      value: 33.53
       objectReference: {fileID: 0}
     - target: {fileID: 3814185294606463374, guid: 3f7dd0e9bb47425f3b6515ab77926eb2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -812,7 +815,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3814185294606463374, guid: 3f7dd0e9bb47425f3b6515ab77926eb2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.88
+      value: 7.8
       objectReference: {fileID: 0}
     - target: {fileID: 3814185294606463374, guid: 3f7dd0e9bb47425f3b6515ab77926eb2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1796,7 +1799,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3814185294606463374, guid: 3f7dd0e9bb47425f3b6515ab77926eb2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.66
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 3814185294606463374, guid: 3f7dd0e9bb47425f3b6515ab77926eb2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2083,7 +2086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1439825590609749429, guid: af28e02efb1b49bc09580ce7162442e3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.41
+      value: 41.49
       objectReference: {fileID: 0}
     - target: {fileID: 1439825590609749429, guid: af28e02efb1b49bc09580ce7162442e3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2377,7 +2380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3636473448424179601, guid: e021f2107856b97978976612624c27b8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.94
+      value: 6.08
       objectReference: {fileID: 0}
     - target: {fileID: 3636473448424179601, guid: e021f2107856b97978976612624c27b8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2434,7 +2437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3636473448424179601, guid: e021f2107856b97978976612624c27b8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.233784
+      value: 34.65
       objectReference: {fileID: 0}
     - target: {fileID: 3636473448424179601, guid: e021f2107856b97978976612624c27b8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2442,7 +2445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3636473448424179601, guid: e021f2107856b97978976612624c27b8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.45
+      value: 3.87
       objectReference: {fileID: 0}
     - target: {fileID: 3636473448424179601, guid: e021f2107856b97978976612624c27b8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3018,6 +3021,9 @@ MonoBehaviour:
   linearDepthMat: {fileID: 2100000, guid: 1a4e94f91c4f34780864abbef8b7198d, type: 2}
   width: 640
   height: 640
+  renderLayers:
+    serializedVersion: 2
+    m_Bits: 55
 --- !u!81 &1346261489
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3065,7 +3071,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3156,7 +3162,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1378991930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3173,9 +3179,10 @@ MonoBehaviour:
   pointScale: 0.25
   pointColor: {r: 1, g: 0, b: 0, a: 1}
   maxPointsToShow: 2500
-  showInGameView: 0
+  showInGameView: 1
   showInSceneView: 1
   debugLogReceive: 1
+  occupancyLayerName: OccupancyDebug
 --- !u!4 &1378991931
 Transform:
   m_ObjectHideFlags: 0
