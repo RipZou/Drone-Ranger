@@ -1229,7 +1229,7 @@ MonoBehaviour:
   droneTransform: {fileID: 1985238720}
   overviewPosition: {x: -88, y: 200, z: 109}
   overviewRotation: {x: 90, y: 0, z: 0}
-  chaseOffset: {x: 0, y: 8, z: -15}
+  chaseOffset: {x: 0, y: 8, z: -8}
   smoothPos: 8
   smoothRot: 8
   fpvLocalOffset: {x: 0, y: 0, z: 0.5}
@@ -2204,13 +2204,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1818947062}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.08501129, y: -0.21964268, z: 0.01921635, w: -0.97167945}
+  m_LocalRotation: {x: -0.18643878, y: -0.30468127, z: 0.00015231839, w: -0.9340289}
   m_LocalPosition: {x: -3.69, y: -7.2, z: 109.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 494025459}
-  m_LocalEulerAnglesHint: {x: 10, y: -334.525, z: 0}
+  m_LocalEulerAnglesHint: {x: 20.388, y: -322.617, z: 6.944}
 --- !u!4 &1933063710 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6466641433616646847, guid: 86c532249aeb12a489aaae9562a6bb08, type: 3}
@@ -2225,7 +2225,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1985238720}
-  - component: {fileID: 1985238719}
   - component: {fileID: 1985238722}
   - component: {fileID: 1985238721}
   - component: {fileID: 1985238723}
@@ -2236,18 +2235,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1985238719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985238718}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d21ff27b207a54dabb5cab44c1a0bb2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1985238720
 Transform:
   m_ObjectHideFlags: 0
@@ -2256,7 +2243,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1985238718}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00044145124, y: 0.000023526432, z: -0.0007870853, w: 0.99999964}
+  m_LocalRotation: {x: 0.00044145138, y: 0.000023526443, z: -0.0007870856, w: 0.99999964}
   m_LocalPosition: {x: -3, y: -8.44, z: 112.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2281,9 +2268,12 @@ MonoBehaviour:
   applyPoseFromROS: 1
   target: {fileID: 0}
   poseMode: 2
+  worldOrigin: {fileID: 1985238720}
   positionOffset: {x: 0, y: 0, z: 0}
   yawOffsetDeg: 0
   rotSmooth: 3
+  logIntervalSec: 1
+  logConnectionAndParams: 1
 --- !u!114 &1985238722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2312,19 +2302,19 @@ MonoBehaviour:
   _detectTransformChanges: 1
   _localToGlobeFixedMatrix:
     c0:
-      x: 0.8497096437538907
-      y: -0.5272499747308115
-      z: -0.000992702494317251
+      x: 0.849709644041621
+      y: -0.5272499742662745
+      z: -0.0009927029388843056
       w: 0
     c1:
-      x: -0.41840883268704926
-      y: -0.6754458388889732
-      z: 0.6072124566058874
+      x: -0.4184088319860291
+      y: -0.6754458390951243
+      z: 0.6072124568596222
       w: 0
     c2:
-      x: 0.32082326917076476
-      y: 0.5155389246934552
-      z: 0.7945388895986004
+      x: 0.3208232693229598
+      y: 0.5155389248984524
+      z: 0.7945388894041338
       w: 0
     c3:
       x: -2682269.967619016

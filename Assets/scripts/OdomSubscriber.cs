@@ -12,10 +12,10 @@ public class DronePoseSubscriber : MonoBehaviour
     public enum PoseMode { PositionOnly, PositionPlusYaw, FullPose }
 
     [Header("ROS Settings")]
-    [Tooltip("ROS odometry topic name (/fmu/out/vehicle_odometry or /sim/drone/odom)")]
-    public string topicName = "/sim/drone/odom";
+    [Tooltip("ROS odometry topic (odom_bridge publishes ENU to /drone/odom)")]
+    public string topicName = "/drone/odom";
 
-    [Tooltip("Check if incoming odometry is NED (Z down, PX4). Leave unchecked for ENU (Z up, PyBullet).")]
+    [Tooltip("odom_bridge publishes ENU. Leave unchecked. Check only if using raw NED source.")]
     public bool odomIsNED = false;
 
     [Header("Control")]
@@ -28,6 +28,10 @@ public class DronePoseSubscriber : MonoBehaviour
     [Header("Pose Mode")]
     public PoseMode poseMode = PoseMode.FullPose;
 
+    [Header("Unity world origin (drone takeoff place)")]
+    [Tooltip("If set, drone position = this transform's position + odom. Place this empty at your desired takeoff spot in the scene.")]
+    public Transform worldOrigin;
+
     [Header("Offsets (optional)")]
     public Vector3 positionOffset = Vector3.zero;
     public float yawOffsetDeg = 0f;
@@ -36,8 +40,18 @@ public class DronePoseSubscriber : MonoBehaviour
     [Tooltip("0 = no smoothing, higher = smoother rotation")]
     public float rotSmooth = 3f;
 
+    [Header("Debug")]
+    [Tooltip("Log received position to Console every N seconds (0 = disable)")]
+    public float logIntervalSec = 1f;
+    [Tooltip("Log subscribe params and first message (recommended for testing)")]
+    public bool logConnectionAndParams = true;
+
     private ROSConnection ros;
     private bool initialized = false;
+    private Vector3 worldOriginPosition;
+    private float lastLogTime;
+    private bool firstMessageLogged;
+    private int messageCount;
 
     void Awake()
     {
@@ -46,9 +60,21 @@ public class DronePoseSubscriber : MonoBehaviour
 
     void Start()
     {
+        if (worldOrigin != null)
+            worldOriginPosition = worldOrigin.position;
+        else
+            worldOriginPosition = target.position;
+
         ros = ROSConnection.GetOrCreateInstance();
         ros.Subscribe<OdometryMsg>(topicName, OnOdom);
-        Debug.Log($"[DronePoseSubscriber] Subscribed to {topicName}");
+
+        if (logConnectionAndParams)
+        {
+            string originInfo = worldOrigin != null ? ("worldOrigin=" + worldOrigin.name + " @ " + worldOriginPosition) : ("worldOrigin=this.position @ " + worldOriginPosition);
+            Debug.Log($"[DronePoseSubscriber] Subscribe OK | topic={topicName} | target={target.name} | odomIsNED={odomIsNED} | {originInfo}");
+        }
+        else
+            Debug.Log($"[DronePoseSubscriber] Subscribed to " + topicName + (worldOrigin != null ? ", worldOrigin: " + worldOrigin.name : " (using current position as origin)"));
 
         var rb = target.GetComponent<Rigidbody>();
         if (rb != null) { rb.useGravity = false; rb.isKinematic = true; }
@@ -56,6 +82,13 @@ public class DronePoseSubscriber : MonoBehaviour
 
     void OnOdom(OdometryMsg msg)
     {
+        messageCount++;
+        if (logConnectionAndParams && !firstMessageLogged)
+        {
+            firstMessageLogged = true;
+            Debug.Log($"[DronePoseSubscriber] First /drone/odom received -> ROS link OK. Raw pose x={msg.pose.pose.position.x:F3} y={msg.pose.pose.position.y:F3} z={msg.pose.pose.position.z:F3}");
+        }
+
         if (!applyPoseFromROS) return;
         var p = msg.pose.pose.position;
         var q = msg.pose.pose.orientation;
@@ -122,8 +155,14 @@ public class DronePoseSubscriber : MonoBehaviour
                 rotUnity = Quaternion.Euler(0f, (qUnityFull.eulerAngles).y + yawOffsetDeg, 0f);
         }
 
-        // --- Apply Transform ---
-        target.position = posUnity + positionOffset;
+        // --- Apply Transform: Unity world origin + odom (so drone starts at scene-defined takeoff place) ---
+        target.position = worldOriginPosition + posUnity + positionOffset;
+
+        if (logIntervalSec > 0f && Time.time - lastLogTime >= logIntervalSec)
+        {
+            lastLogTime = Time.time;
+            Debug.Log($"[DronePose] /drone/odom msg#={messageCount} -> Unity position=({target.position.x:F2}, {target.position.y:F2}, {target.position.z:F2})");
+        }
 
         if (poseMode != PoseMode.PositionOnly)
         {

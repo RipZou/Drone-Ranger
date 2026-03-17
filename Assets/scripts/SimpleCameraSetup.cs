@@ -31,6 +31,7 @@ public class SimpleCameraSetup : MonoBehaviour
 
     CameraMode currentMode;
     bool initialized = false;
+    bool loggedNullDroneOnce;
 
     void Start()
     {
@@ -44,6 +45,19 @@ public class SimpleCameraSetup : MonoBehaviour
             return;
         }
 
+        // 必须跟随“被 OdomSubscriber 更新的物体”，否则看不到飞机动
+        if (droneTransform == null)
+        {
+            var sub = FindObjectOfType<DronePoseSubscriber>();
+            if (sub != null && sub.target != null)
+            {
+                droneTransform = sub.target;
+                Debug.Log($"[CameraSetup] Auto-assigned Drone to Follow: {droneTransform.name}");
+            }
+            else
+                Debug.LogWarning("[CameraSetup] Drone to Follow 未指定且未找到 DronePoseSubscriber.target，相机不会跟随飞行！请在 Inspector 中指定。");
+        }
+
         // 确保 Main Camera 启用且没有 targetTexture（渲染到屏幕）
         mainCam.enabled = true;
         mainCam.targetTexture = null;
@@ -53,7 +67,10 @@ public class SimpleCameraSetup : MonoBehaviour
         DisableExtraCameras();
 
         currentMode = defaultMode;
-        Debug.Log($"[CameraSetup] Ready. Mode={currentMode}. Press 1/2/3 to switch.");
+        if (droneTransform != null)
+            Debug.Log($"[CameraSetup] Ready. Mode={currentMode}. Following: {droneTransform.name}. Game 视图请确认显示的是 Main Camera。");
+        else
+            Debug.LogWarning("[CameraSetup] Ready but Drone to Follow is null - 相机不会跟随，Game 里会看起来没动！");
     }
 
     void Update()
@@ -89,7 +106,11 @@ public class SimpleCameraSetup : MonoBehaviour
 
     void UpdateChase()
     {
-        if (droneTransform == null) return;
+        if (droneTransform == null)
+        {
+            if (!loggedNullDroneOnce) { Debug.LogWarning("[CameraSetup] Chase: Drone to Follow 为空，相机不移动。请把 CameraManager 的 Drone to Follow 指到挂有 OdomSubscriber 的 Drone。"); loggedNullDroneOnce = true; }
+            return;
+        }
 
         Vector3 dronePos = droneTransform.position;
         Quaternion droneRot = droneTransform.rotation;
