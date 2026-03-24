@@ -47,7 +47,16 @@ public class StaticCamDepthPublisher : MonoBehaviour
         double stamp = Time.timeAsDouble - latencyMs * 1e-3;
 
         var msg = CaptureDepth(stamp);
-        ros.Publish(depthTopic, msg);
+        try
+        {
+            ros.Publish(depthTopic, msg);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning($"[StaticCamDepthPublisher] Publish failed on {depthTopic}: {e.Message}. Re-registering and retrying...");
+            ros.RegisterPublisher<ImageMsg>(depthTopic);
+            ros.Publish(depthTopic, msg);
+        }
     }
 
     ImageMsg CaptureDepth(double stamp)
@@ -86,7 +95,16 @@ public class StaticCamDepthPublisher : MonoBehaviour
         double stamp = Time.timeAsDouble - latencyMs * 1e-3;
         var info = BuildCameraInfo();
         SetStamp(ref info, stamp);
-        ros.Publish(depthInfoTopic, info);
+        try
+        {
+            ros.Publish(depthInfoTopic, info);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning($"[StaticCamDepthPublisher] Publish failed on {depthInfoTopic}: {e.Message}. Re-registering and retrying...");
+            ros.RegisterPublisher<CameraInfoMsg>(depthInfoTopic);
+            ros.Publish(depthInfoTopic, info);
+        }
     }
 
     CameraInfoMsg BuildCameraInfo()

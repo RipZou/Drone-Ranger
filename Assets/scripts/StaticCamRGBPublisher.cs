@@ -48,7 +48,16 @@ public class StaticCamRGBPublisher : MonoBehaviour
         double stamp = Time.timeAsDouble - latencyMs * 1e-3;
 
         var msg = CaptureRGB(stamp);
-        ros.Publish(rgbTopic, msg);
+        try
+        {
+            ros.Publish(rgbTopic, msg);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning($"[StaticCamRGBPublisher] Publish failed on {rgbTopic}: {e.Message}. Re-registering and retrying...");
+            ros.RegisterPublisher<ImageMsg>(rgbTopic);
+            ros.Publish(rgbTopic, msg);
+        }
     }
 
     ImageMsg CaptureRGB(double stamp)
@@ -82,7 +91,16 @@ public class StaticCamRGBPublisher : MonoBehaviour
         double stamp = Time.timeAsDouble - latencyMs * 1e-3;
         var info = BuildCameraInfo();
         SetStamp(ref info, stamp);
-        ros.Publish(rgbInfoTopic, info);
+        try
+        {
+            ros.Publish(rgbInfoTopic, info);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning($"[StaticCamRGBPublisher] Publish failed on {rgbInfoTopic}: {e.Message}. Re-registering and retrying...");
+            ros.RegisterPublisher<CameraInfoMsg>(rgbInfoTopic);
+            ros.Publish(rgbInfoTopic, info);
+        }
     }
 
     CameraInfoMsg BuildCameraInfo()

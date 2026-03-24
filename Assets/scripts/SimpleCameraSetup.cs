@@ -18,6 +18,12 @@ public class SimpleCameraSetup : MonoBehaviour
     public Vector3 fpvLocalOffset = new Vector3(0f, 0f, 0.5f);
     public Vector3 fpvLocalEuler = Vector3.zero;
 
+    [Header("Main Camera Policy")]
+    [Tooltip("Do NOT disable Unity's Main Camera by default.\n"
+        + "CesiumGeoreference with _useMainCamera=1 often depends on it to update geospatial transforms.\n"
+        + "Set to true only if you are sure CesiumGeoreference uses another camera.")]
+    public bool disableUnityMainCamera = false;
+
     int currentCameraIndex = 1; 
 
     void Awake() {
@@ -25,7 +31,10 @@ public class SimpleCameraSetup : MonoBehaviour
     }
 
     void Start() {
-        if (Camera.main) Camera.main.enabled = false; // 防止还有别的相机在渲染
+        // Important: keep Camera.main enabled by default.
+        // Otherwise CesiumGeoreference (when configured to use Main Camera) may stop updating,
+        // causing the globe/objects to appear incorrect or "empty".
+        if (disableUnityMainCamera && Camera.main) Camera.main.enabled = false;
         SetActiveCamera(1);
         Debug.Log("SimpleCameraSetup ready. 1/2/3 switch cameras.");
     }

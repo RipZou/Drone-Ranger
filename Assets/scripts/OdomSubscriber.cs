@@ -47,7 +47,11 @@ public class DronePoseSubscriber : MonoBehaviour
         Debug.Log($"[DronePoseSubscriber] Subscribed to {topicName}");
 
         var rb = target.GetComponent<Rigidbody>();
-        if (rb != null) { rb.useGravity = false; rb.isKinematic = true; }
+        if (rb != null)
+        {
+            rb.useGravity = false;
+            rb.isKinematic = true;
+        }
     }
 
     void OnOdom(OdometryMsg msg)
@@ -135,3 +139,4 @@ public class DronePoseSubscriber : MonoBehaviour
         }
     }
 }
+
